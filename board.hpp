@@ -67,9 +67,19 @@ public:
     printf("Score : %d\n", score);
     printf("Next : %d\n", next);
     for (int i = 0; i < height; ++i) {
-      for (int j = 0; j < width; ++j)
-        if (i < height - 1 || board[i][j] > 0) printf("%2d ", board[i][j]);
+      for (int j = 0; j < width; ++j) {
+        int n = board[i][j];
+        if (i < height - 1 || n > 0) {
+#ifdef __APPLE__
+          printf("\033[1;3%dm%2d\033[0m ", n > 0 ? n % 7 + 1 : 0, n);
+#elif __unix__
+          printf("\e[3%dm%2d ", n > 0 ? n % 7 : 7, n);
+#else
+          printf("%2d ", n);
+#endif
+        }
         else printf("   ");
+      }
       puts("");
     }
     puts("");
@@ -86,11 +96,9 @@ public:
       }
     }
     if (num == -1) return false;
-    for (int i = height - 2; i >= 0; --i) {
-      if (board[i][attach] == 0) {
-        if (i == 0) board[0][attach] = num;
-        continue;
-      }
+    for (int i = height - 2;; --i) {
+      if (i < 0) { board[0][attach] = num; break; }
+      if (board[i][attach] == 0) continue;
       if (board[i][attach] != num) {
         board[i+1][attach] = num;
         break;
