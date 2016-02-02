@@ -73,7 +73,7 @@ public:
 #ifdef __APPLE__
           printf("\033[1;3%dm%2d\033[0m ", n > 0 ? n % 7 + 1 : 0, n);
 #elif __unix__
-          printf("\e[3%dm%2d ", n > 0 ? n % 7 : 7, n);
+          printf("\e[3%dm%2d \e[37m", n > 0 ? n % 7 : 7, n);
 #else
           printf("%2d ", n);
 #endif
