@@ -11,13 +11,14 @@ int main(int argc, char **argv) {
   }
   Board board;
   for (;;) {
+    board.output();
     reactive_write(board.to_json().c_str());
     std::istringstream is(reactive_read());
     int detach, attach;
     is >> detach >> attach;
-    board.output();
     if (!board.play(detach, attach)) break;
   }
+  board.output();
   reactive_write(board.to_json().c_str());
   reactive_end();
   std::cout << "Score: " << board.final_score() << std::endl;

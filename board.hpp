@@ -109,7 +109,7 @@ public:
     }
     std::vector<int> cand;
     for (int i = 0; i < width; ++i)
-      if (board[height-1][i] == 0 && i != attach) cand.push_back(i);
+      if (board[height-2][i] == 0 && i != attach) cand.push_back(i);
     if (cand.empty()) {
       for (int i = 0; i < width; ++i)
         if (i != attach) cand.push_back(i);
